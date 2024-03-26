@@ -1,6 +1,7 @@
 import { TIngredient } from '@utils-types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getIngredientsApi } from '@api';
+import { useNavigate } from 'react-router-dom';
 
 export const fetchIngredientApi = createAsyncThunk('ingredients/fetch', getIngredientsApi);
 

@@ -19,86 +19,91 @@ import { useEffect } from 'react';
 import { fetchIngredientApi } from '../../utils/constants';
 
 const App = () => {
+
+  const navigate = useNavigate();
+  const handleCloseNavigate = () => {
+    navigate(-1);
+}
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchIngredientApi());
   }, []);
 
-  return (
-    <div className={styles.app}>
-      <AppHeader />
-      <Routes>
-        <Route path='/' element={<ConstructorPage />} />
-        <Route path='/feed' element={<Feed />} />
-        <Route path='/login'
-          element={
-            <ProtectedRoute>
-              <Login />
-            </ProtectedRoute>}
-        />
-        <Route path='/register'
-          element={
-            <ProtectedRoute>
-              <Register />
-            </ProtectedRoute>}
-        />
-        <Route path='/forgot-password'
-          element={
-            <ProtectedRoute>
-              <ForgotPassword />
-            </ProtectedRoute>}
-        />
-        <Route path='/reset-password'
-          element={
-            <ProtectedRoute>
-              <ResetPassword />
-            </ProtectedRoute>} />
-        <Route path='/profile'
-          element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>}
-        />
-        <Route path='/profile/orders'
-          element={
-            <ProtectedRoute>
-              <ProfileOrders />
-            </ProtectedRoute>} />
-        <Route path='*' element={<NotFound404 />} />
-        <Route path='/feed/:number'
-          element={
-            <Modal
-              title={''}
-              onClose={function (): void {
-                throw new Error('OrderInfo');
-              }}            >
-              <OrderInfo />
-            </Modal>}
-        />
-        <Route path='/ingredients/:id'
-          element={
-            <Modal
-              title={''}
-              onClose={function (): void {
-                throw new Error('IngredientDetails');
-              }}
-            >
-              <IngredientDetails />
-            </Modal>}
-        />
-        <Route path='/profile/orders/:number'
-          element={
-            <Modal
-              title={''}
-              onClose={function (): void {
-                throw new Error('OrderInfo: number');
-              }}
-            >
-              <OrderInfo />
-            </Modal>}
-        />
-      </Routes>
-    </div>
-  );
+
+return (
+  <div className={styles.app}>
+    <AppHeader />
+    <Routes>
+      <Route path='/' element={<ConstructorPage />} />
+      <Route path='/feed' element={<Feed />} />
+      <Route path='/login'
+        element={
+          <ProtectedRoute>
+            <Login />
+          </ProtectedRoute>}
+      />
+      <Route path='/register'
+        element={
+          <ProtectedRoute>
+            <Register />
+          </ProtectedRoute>}
+      />
+      <Route path='/forgot-password'
+        element={
+          <ProtectedRoute>
+            <ForgotPassword />
+          </ProtectedRoute>}
+      />
+      <Route path='/reset-password'
+        element={
+          <ProtectedRoute>
+            <ResetPassword />
+          </ProtectedRoute>} />
+      <Route path='/profile'
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>}
+      />
+      <Route path='/profile/orders'
+        element={
+          <ProtectedRoute>
+            <ProfileOrders />
+          </ProtectedRoute>} />
+      <Route path='*' element={<NotFound404 />} />
+      <Route path='/feed/:number'
+        element={
+          <Modal
+            title={''}
+            onClose={function (): void {
+              throw new Error('OrderInfo');
+            }}            >
+            <OrderInfo />
+          </Modal>}
+      />
+      <Route path='/ingredients/:id'
+        element={
+          <Modal
+            title={''}
+            onClose={handleCloseNavigate}
+          >
+            <IngredientDetails />
+          </Modal>}
+      />
+      <Route path='/profile/orders/:number'
+        element={
+          <Modal
+            title={''}
+            onClose={function (): void {
+              throw new Error('OrderInfo: number');
+            }}
+          >
+            <OrderInfo />
+          </Modal>}
+      />
+    </Routes>
+  </div>
+);
 };
 export default App;
