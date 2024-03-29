@@ -1,21 +1,48 @@
-import { FC, useMemo } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { TConstructorIngredient } from '@utils-types';
 import { BurgerConstructorUI } from '@ui';
-import { useSelector } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
+import { closeOrderNumberModal } from '../../services/slices/orderSlice'
+import { fetchOrderBurgerApi } from '../../utils/constants';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { constructorItems } = useSelector((state) => state.burgerConstructor);
+  const userAuth = useSelector((state) => state.user.user);
+  const orderRequest = useSelector((state) => state.order.orderRequest);
 
+  const orderModalData = useSelector((state) => state.order.orderModalData);
 
-
-  const orderRequest = false;
-
-  const orderModalData = null;
+  let orderData: string[] = [];
 
   const onOrderClick = () => {
-    if (!constructorItems.bun || orderRequest) return;
+    if (!userAuth) {
+      navigate('/login');
+      return;
+    } else if (!constructorItems.bun || orderRequest) {
+      const ingredientsIds = constructorItems.ingredients.map(ingredient => ingredient._id);
+      dispatch(fetchOrderBurgerApi(ingredientsIds));
+      return;
+    }
   };
-  const closeOrderModal = () => { };
+
+  useEffect(() => {
+    if (constructorItems.bun && constructorItems.ingredients) {
+      orderData = [
+        constructorItems.bun._id,
+        ...constructorItems.ingredients.map((ing) => ing._id),
+        constructorItems.bun._id
+      ];
+    }
+  }, [constructorItems]);
+
+console.log(orderRequest);
+  const closeOrderModal = () => {
+    dispatch(closeOrderNumberModal());
+  };
 
   const price = useMemo(
     () =>
@@ -26,8 +53,6 @@ export const BurgerConstructor: FC = () => {
       ),
     [constructorItems]
   );
-
-  // return null;
 
   return (
     <BurgerConstructorUI
