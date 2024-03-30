@@ -12,7 +12,7 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/ProtectedRoute';
 import { useDispatch } from '../../services/store';
 import { useEffect } from 'react';
@@ -23,6 +23,8 @@ const App = () => {
   const handleCloseNavigate = () => {
     navigate(-1);
   };
+  const location = useLocation();
+  const backgroundLoc = location.state?.background;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,7 +35,7 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={backgroundLoc || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/login' element={<OnlyUnAuth component={<Login />} />} />
@@ -55,24 +57,35 @@ const App = () => {
           element={<OnlyAuth component={<ProfileOrders />} />}
         />
         <Route path='*' element={<NotFound404 />} />
-        <Route path='/feed/:number' element={<OrderInfo />} />
-        <Route
-          path='/ingredients/:id'
-          element={
-            <Modal title={''} onClose={handleCloseNavigate}>
-              <IngredientDetails />
-            </Modal>
-          }
-        />
-        <Route
-          path='/profile/orders/:number'
-          element={
-            <Modal title={''} onClose={handleCloseNavigate}>
-              <OnlyAuth component={<OrderInfo />} />
-            </Modal>
-          }
-        />
       </Routes>
+      {backgroundLoc && (
+        <Routes>
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title={'Детали ингридиента'} onClose={handleCloseNavigate}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title={'Детали ингридиента'} onClose={handleCloseNavigate}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/profile/orders/:number'
+            element={
+              <Modal title={'Детали ингридиента'} onClose={handleCloseNavigate}>
+                <OnlyAuth component={<OrderInfo />} />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };
