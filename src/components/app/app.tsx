@@ -58,14 +58,7 @@ const App = () => {
           element={<OnlyAuth component={<ProfileOrders />} />}
         />
         <Route path='*' element={<NotFound404 />} />
-        <Route path='/feed/:number'
-          element={
-            <Modal
-              title={''}
-              onClose={handleCloseNavigate}>
-              <OrderInfo />
-            </Modal>}
-        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/ingredients/:id'
           element={
             <Modal

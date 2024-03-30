@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchOrderBurgerApi } from '../../utils/constants';
+import { fetchOrderApi, fetchOrderBurgerApi } from '../../utils/constants';
 import { TOrder } from '@utils-types';
 
 type TOrderState = {
-
+    orders: TOrder[];
     orderRequest: boolean;
     orderModalData: TOrder | null;
 }
 
 const initialState: TOrderState = {
-
+    orders: [],
     orderRequest: false,
     orderModalData: null
 }
@@ -18,7 +18,7 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        closeOrderNumberModal: (state) => {
+        closeOrder: (state) => {
             state.orderRequest = false;
         }
     },
@@ -34,8 +34,14 @@ export const orderSlice = createSlice({
                 state.orderRequest = false;
                 state.orderModalData = action.payload;
             });
-    },
+
+        builder
+            .addCase(fetchOrderApi.fulfilled, (state, action) => {
+                state.orders = action.payload
+            }
+            )
+    }
 });
 
 export default orderSlice.reducer;
-export const { closeOrderNumberModal } = orderSlice.actions;
+export const { closeOrder } = orderSlice.actions;

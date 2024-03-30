@@ -6,16 +6,17 @@ import { useSelector, useDispatch } from '../../services/store';
 import { fetchFeedsApi } from '../../utils/constants';
 
 export const Feed: FC = () => {
-  const orders: TOrder[] = useSelector((state) => state.feed.order);
+ 
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchFeedsApi())
   }, []);
-
+  
+  const orders: TOrder[] = useSelector((state) => state.feed.orders);
+  console.log(orders);
   if (!orders.length) {
     return <Preloader />;
   }
 
-  <FeedUI orders={orders} handleGetFeeds={() =>dispatch(fetchFeedsApi())} />;
+  return <FeedUI orders={orders} handleGetFeeds={() => dispatch(fetchFeedsApi())} />;
 };

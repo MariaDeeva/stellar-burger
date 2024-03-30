@@ -1,19 +1,32 @@
 import { TIngredient, TUser } from '@utils-types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from '../utils/cookie';
-import { getIngredientsApi, getFeedsApi, orderBurgerApi, getUserApi, logoutApi, loginUserApi, updateUserApi, registerUserApi, TRegisterData, TLoginData } from '@api';
+import { getIngredientsApi, 
+  getFeedsApi, 
+  orderBurgerApi, 
+  getUserApi, 
+  logoutApi, 
+  loginUserApi, 
+  updateUserApi, 
+  registerUserApi, 
+  TRegisterData, 
+  TLoginData, 
+  getOrdersApi 
+} from '@api';
 import { setUser, setIsAuthChecked } from '../services/slices/userSlice';
 //Ингредиенты
 export const fetchIngredientApi = createAsyncThunk('ingredients/fetch', getIngredientsApi);
+
 //Лента заказов
-export const fetchFeedsApi = createAsyncThunk('feed/fetch', getFeedsApi);
+export const fetchFeedsApi = createAsyncThunk('order/fetch', getFeedsApi);
+
 //Заказ
-export const fetchOrderBurgerApi = createAsyncThunk('burgerOrder/fetch',
+export const fetchOrderBurgerApi = createAsyncThunk('order/fetchOrderBurger',
   async (data: string[]) => {
     const res = await orderBurgerApi(data);
     return res.order;
   });
-
+export const fetchOrderApi = createAsyncThunk('order/fetchOrder', getOrdersApi);
 
 //Пользователи
 export const logout = createAsyncThunk(
@@ -46,10 +59,6 @@ export const registerUser = createAsyncThunk(
 );
 
 
-//Отбор по типу
-
-
-
 //Проверка аутификации пользователя
 export const checkUser = createAsyncThunk(
   'user/checkUser',
@@ -67,3 +76,5 @@ export const checkUser = createAsyncThunk(
     }
   }
 );
+
+

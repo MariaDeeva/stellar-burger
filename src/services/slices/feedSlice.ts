@@ -4,13 +4,13 @@ import { TOrder } from '@utils-types';
 import { fetchFeedsApi } from '../../utils/constants';
 
 type TFeedState={
-    order: TOrder[],
+    orders: TOrder[],
     total:number,
     totalToday:number
 }
 
 const initialState:TFeedState={
-    order:[],
+    orders:[],
     total: 0,
     totalToday:0
 }
@@ -20,10 +20,16 @@ const feedSlice = createSlice({
     initialState,
     reducers:{},
     extraReducers(builder) {
-        builder.addCase(fetchFeedsApi.fulfilled,(state,action)=>{
-            state.order= action.payload.orders;
+        builder
+        .addCase(fetchFeedsApi.fulfilled,(state,action)=>{
+            state.orders= action.payload.orders;
             state.total=action.payload.total;
             state.totalToday=action.payload.totalToday;
+        })
+        .addCase(fetchFeedsApi.rejected,(state)=>{
+            state.orders= [];
+            state.total=0;
+            state.totalToday=0;
         })
     },
 })

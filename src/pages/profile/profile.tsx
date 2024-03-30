@@ -4,12 +4,10 @@ import { useDispatch, useSelector } from '../../services/store';
 import { updateUser } from '../../utils/constants';
 
 export const Profile: FC = () => {
-  /** TODO: взять переменную из стора */
   const dispatch = useDispatch();
-
   const user = {
-    name: useSelector((state)=>state.user.user?.name),
-    email:useSelector((state)=>state.user.user?.email)
+    name: useSelector((store) => store.user.user?.name),
+    email: useSelector((store) => store.user.user?.email)
   };
 
   const [formValue, setFormValue] = useState({
@@ -24,7 +22,7 @@ export const Profile: FC = () => {
       name: user?.name || '',
       email: user?.email || ''
     }));
-  }, [user]);
+  }, []);
 
   const isFormChanged =
     formValue.name !== user?.name ||
@@ -61,5 +59,4 @@ export const Profile: FC = () => {
       handleInputChange={handleInputChange}
     />
   );
-
 };
