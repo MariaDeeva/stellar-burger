@@ -13,7 +13,7 @@ export const IngredientsCategory = forwardRef<
 
   const burgerConstructor = {
     bun: {
-      _id: constructorItems.bun ? constructorItems.bun._id :0
+      _id: constructorItems.bun ? constructorItems.bun._id : 0
     },
     ingredients: constructorItems.ingredients
   };

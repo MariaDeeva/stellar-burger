@@ -17,8 +17,9 @@ export const OrderInfo: FC = () => {
     });
   }, []);
 
-  const ingredients: TIngredient[] = useSelector((state) => state.ingredients.ingredients);
-
+  const ingredients: TIngredient[] = useSelector(
+    (state) => state.ingredients.ingredients
+  );
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;

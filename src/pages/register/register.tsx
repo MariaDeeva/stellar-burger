@@ -1,7 +1,7 @@
 import { FC, SyntheticEvent, useState } from 'react';
 import { RegisterUI } from '@ui-pages';
 import { useDispatch } from '../../services/store';
-import { registerUser } from '../../utils/constants';
+import { registerUser } from '../../services/actions';
 import { useNavigate } from 'react-router-dom';
 
 export const Register: FC = () => {
@@ -13,11 +13,9 @@ export const Register: FC = () => {
   const navigate = useNavigate();
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    dispatch(registerUser({
-      email: email,
-      name: userName,
-      password: password
-    }));
+    dispatch(
+      registerUser({ email: email, name: userName, password: password })
+    );
     navigate(-1);
   };
 
