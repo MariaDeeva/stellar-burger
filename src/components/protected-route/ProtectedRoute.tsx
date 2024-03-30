@@ -1,4 +1,4 @@
-import store, { useSelector } from '../../services/store';
+import { useSelector } from '../../services/store';
 import { useLocation, Navigate } from 'react-router-dom';
 import { Preloader } from '../ui/preloader';
 

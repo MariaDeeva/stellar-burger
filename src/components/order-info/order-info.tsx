@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom';
 import { getOrderByNumberApi } from '@api';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора  useSelector((state)=>state.order.orderModalData);*/
   const [orderData, setOrderData] = useState<TOrder>();
   const { number } = useParams();
 
