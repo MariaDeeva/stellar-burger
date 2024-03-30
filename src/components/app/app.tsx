@@ -63,7 +63,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title={'Детали ингридиента'} onClose={handleCloseNavigate}>
+              <Modal title={'Детали заказа'} onClose={handleCloseNavigate}>
                 <OrderInfo />
               </Modal>
             }
@@ -79,7 +79,7 @@ const App = () => {
           <Route
             path='/profile/orders/:number'
             element={
-              <Modal title={'Детали ингридиента'} onClose={handleCloseNavigate}>
+              <Modal title={'Детали заказа'} onClose={handleCloseNavigate}>
                 <OnlyAuth component={<OrderInfo />} />
               </Modal>
             }
