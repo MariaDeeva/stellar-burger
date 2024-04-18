@@ -35,8 +35,6 @@ export const refreshToken = (): Promise<TRefreshResponse> =>
       return refreshData;
     });
 
-/* Это предпочтительны способ обновления токена, но допустимы и другие, главное,
-что бы обновление токена работало корректно */
 export const fetchWithRefresh = async <T>(
   url: RequestInfo,
   options: RequestInit
@@ -144,7 +142,6 @@ type TAuthResponse = TServerResponse<{
   accessToken: string;
   user: TUser;
 }>;
-
 export const registerUserApi = (data: TRegisterData) =>
   fetch(`${URL}/auth/register`, {
     method: 'POST',
@@ -173,8 +170,13 @@ export const loginUserApi = (data: TLoginData) =>
     body: JSON.stringify(data)
   })
     .then((res) => checkResponse<TAuthResponse>(res))
+    .catch((err) => Promise.reject(err))
     .then((data) => {
-      if (data?.success) return data;
+      if (data?.success) {
+        localStorage.setItem('refreshToken', data.refreshToken);
+        setCookie('accessToken', data.accessToken);
+        return data;
+      }
       return Promise.reject(data);
     });
 
