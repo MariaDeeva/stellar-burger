@@ -12,7 +12,6 @@ export const Feed: FC = () => {
   }, []);
 
   const orders: TOrder[] = useSelector((state) => state.feed.orders);
-  console.log(orders);
   if (!orders.length) {
     return <Preloader />;
   }
