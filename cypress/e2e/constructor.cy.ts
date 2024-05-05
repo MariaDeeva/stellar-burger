@@ -1,11 +1,13 @@
 describe('Тестирование приложений cypress', () => {
     const url = 'http://localhost:4000';
+    const modalElement = '[data-cy="modal"]';
+    const closeButton = '[data-cy="close-button"]';
 
     it('Проверка доступа localhost:4000', () => {
         cy.visit(url);
         cy.viewport(1280, 720);
     });
-
+   
     beforeEach(() => {
         cy.intercept('GET', 'api/ingredients', (req) => {
             //     console.log('Request intercepted for api/ingredients:', req);
@@ -29,16 +31,17 @@ describe('Тестирование приложений cypress', () => {
     });
 
     describe('Тестирование модальных окон', () => {
+       
         beforeEach(() => {
             cy.get('[data-cy="ingredients-category"]').find('li').first().click();
-            cy.get('[data-cy="modal"]').should('be.visible');
+            cy.get(modalElement).should('be.visible');
         });
         it('Проверка закрытия модального окна', () => {
-            cy.get('[data-cy="close-button"]').click();
-            cy.get('[data-cy="modal"]').should('not.exist');
+            cy.get(closeButton).click();
+            cy.get(modalElement).should('not.exist');
         });
         it('Проверка открытия с описанием модального окна', () => {
-            cy.get('[data-cy="modal"]').should('exist');
+            cy.get(modalElement).should('exist');
             cy.get('[data-cy="ingredient-image"]').should('be.visible');
             cy.get('[data-cy="ingredient-name"]').should('not.be.empty')
             cy.get('li').children('p').contains('Калории, ккал').next('p').should('not.be.empty');
@@ -73,9 +76,9 @@ describe('Тестирование приложений cypress', () => {
             cy.get('h3').contains('Начинки').next('ul').contains('Добавить').click() ||
             cy.get('h3').contains('Соусы').next('ul').contains('Добавить').click();
             cy.contains('Оформить заказ').click();
-            cy.contains('38854').should('be.visible');
-            cy.get('[data-cy="close-button"]').click();
-            cy.get('[data-cy="modal"]').should('not.exist');
+            cy.contains('38854');
+            cy.get(closeButton).click();
+            cy.get(modalElement).should('not.exist');
             cy.contains('Выберите булки').should('exist');
             cy.contains('Выберите начинку').should('exist');
         });
