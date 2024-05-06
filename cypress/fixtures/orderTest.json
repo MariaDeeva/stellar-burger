@@ -1,0 +1,19 @@
+{
+    "success": true,
+    "order": {
+        "createdAt": "2024-04-26T11:28:58.868Z",
+        "ingredients": ["643d69a5c3f7b9001cfa093c",
+            "643d69a5c3f7b9001cfa0940",
+            "643d69a5c3f7b9001cfa0940",
+            "643d69a5c3f7b9001cfa093c"],
+        "name": "Краторный метеоритный бургер",
+        "number": 38854,
+        "status": "done",
+        "updatedAt": "2024-04-26T11:28:59.550Z",
+        "_id": "662b8ffa97ede0001d067b24"
+    },
+    "owner": {
+        "name": "Test",
+        "email": "Test@test.test"
+    }
+}

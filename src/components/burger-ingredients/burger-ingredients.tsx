@@ -16,12 +16,10 @@ export const BurgerIngredients: FC = () => {
   const buns = filterIngredients(ingredients, 'bun');
   const mains = filterIngredients(ingredients, 'main');
   const sauces = filterIngredients(ingredients, 'sauce');
-
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
   const titleBunRef = useRef<HTMLHeadingElement>(null);
   const titleMainRef = useRef<HTMLHeadingElement>(null);
   const titleSaucesRef = useRef<HTMLHeadingElement>(null);
-
   const [bunsRef, inViewBuns] = useInView({
     threshold: 0
   });

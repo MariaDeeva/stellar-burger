@@ -15,7 +15,6 @@ export const FeedInfo: FC = () => {
     total: useSelector((state) => state.feed.total),
     totalToday: useSelector((state) => state.feed.totalToday)
   };
-
   const readyOrders = getOrders(orders, 'done');
 
   const pendingOrders = getOrders(orders, 'pending');

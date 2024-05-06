@@ -13,7 +13,7 @@ import {
   TRegisterData,
   TLoginData,
   getOrdersApi
-} from '@api';
+} from '../utils/burger-api';
 import { setUser, setIsAuthChecked } from './slices/userSlice';
 //Ингредиенты
 export const fetchIngredientApi = createAsyncThunk(

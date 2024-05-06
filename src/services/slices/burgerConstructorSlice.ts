@@ -9,7 +9,7 @@ type TBurgerConstructorState = {
   };
 };
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
   constructorItems: {
     bun: null,
     ingredients: []
@@ -37,11 +37,30 @@ const burgerConstructorSlice = createSlice({
     resetIngredients: (state) => {
       state.constructorItems.bun = null;
       state.constructorItems.ingredients = [];
+    },
+    updownIngredients: (state, action) => {
+      const { index, move } = action.payload;
+      const { ingredients } = state.constructorItems;
+      if (move === 'up' && index > 0) {
+        [ingredients[index - 1], ingredients[index]] = [
+          ingredients[index],
+          ingredients[index - 1]
+        ];
+      } else if (move === 'down' && index < ingredients.length - 1) {
+        [ingredients[index + 1], ingredients[index]] = [
+          ingredients[index],
+          ingredients[index + 1]
+        ];
+      }
     }
   }
 });
 
-export const { addIngredient, deleteIngredient, resetIngredients } =
-  burgerConstructorSlice.actions;
+export const {
+  addIngredient,
+  deleteIngredient,
+  resetIngredients,
+  updownIngredients
+} = burgerConstructorSlice.actions;
 
 export default burgerConstructorSlice.reducer;
